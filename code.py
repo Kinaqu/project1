@@ -6,9 +6,32 @@ window = Tk()
 
 window.title("Переводчик")
 
+
+    
+
 lbl = Label (window, text="Русский")
 
+btn = Button(window, text = "перевести" )
+
 lbl1 = Label (window, text= "Английский") 
+
+abc = Entry(window,width=20,height=30)  
+
+bca = Entry(window,width=20,height=30)  
+
+
+lbl.grid(column=0, row=0)
+lbl1.grid(column=6, row=0)
+
+
+btn.grid(column=4, row=5)
+
+
+
+abc.grid(column=0, row=3)  
+bca.grid(column=6, row=3)  
+
+
 
 rs = requests.get('http://www.7english.ru/dictionary.php?id=2000&letter=all')
 root = BeautifulSoup(rs.content, 'html.parser')
