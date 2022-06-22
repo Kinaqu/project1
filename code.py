@@ -1,56 +1,52 @@
 from tkinter import *
-import requests
-from bs4 import BeautifulSoup
+from turtle import right
+from googletrans import Translator
+from matplotlib.pyplot import gray, grid
+from pyparsing import anyCloseTag
+
+def transl (): 
+    text = abc.get()
+    a = translator.translate(text, dest='en')
+    bca.delete(0 , END)
+    bca.insert(0,a.text)
 
 window = Tk()
-
 window.title("Переводчик")
 
+window.geometry('500x500')
+
+translator = Translator()
 
     
 
 lbl = Label (window, text="Русский")
 
-btn = Button(window, text = "перевести" )
+btn = Button(window, text = "перевести" , command = transl)
 
 lbl1 = Label (window, text= "Английский") 
 
-abc = Entry(window,width=20,height=30)  
-
-bca = Entry(window,width=20,height=30)  
-
-
-lbl.grid(column=0, row=0)
-lbl1.grid(column=6, row=0)
-
-
-btn.grid(column=4, row=5)
+abc = Entry(window)  
 
 
 
-abc.grid(column=0, row=3)  
-bca.grid(column=6, row=3)  
+bca = Entry(window )  
+
+
+lbl.place(relx=0.2 , y = 30 , anchor=CENTER)
+lbl1.place(relx=0.8 , y=30 , anchor=CENTER)
+
+
+btn.place(relx=0.5 , y = 300 , anchor=CENTER)
 
 
 
-rs = requests.get('http://www.7english.ru/dictionary.php?id=2000&letter=all')
-root = BeautifulSoup(rs.content, 'html.parser')
-
-en_ru_items = []
-
-for tr in root.select('tr[onmouseover]'):
-    td_list = [td.text.strip() for td in tr.select('td')]
-
-    if len(td_list) != 9 or not td_list[1] or not td_list[5]:
-        continue
-    en = td_list[1]
+abc.place( height = 300 , width=600, relx=0.2 , y=230 , anchor= CENTER  )  
+bca.place(height = 300 , width= 600 ,relx=0.8 , y = 230 , anchor= CENTER )  
 
 
 
 
-    ru = td_list[5].split(', ')[0]
 
-    en_ru_items.append((en, ru))
 
 
 window.mainloop()
