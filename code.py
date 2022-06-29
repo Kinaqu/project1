@@ -1,3 +1,4 @@
+from fnmatch import translate
 from tkinter import *
 from turtle import right
 from googletrans import Translator
@@ -30,25 +31,29 @@ def transl ():
 
 def openfile():
     path = askopenfilename()
+    image =Image.open(path)
+    img=ImageTk.PhotoImage(image)
+    view.create_image(5,10, image=img, anchor=NW)
+
+def Translate():
+    path = askopenfilename()
     image1 =Image.open(path)
     string = pyt.image_to_string(image1)
     res = translator.translate(string, dest = 'ru')
     cda.delete(1.0 , END)
     cda.insert(1.0, res.text)
 
-    image2 = Image.open(path)
-    img=ImageTk.PhotoImage(image2)
-    view.create_image(5,10, image=img, anchor=NW)
-
  
 def sender ():
     email = entr.get()
     message = sts.get(1.0 , END)
+    em="tr4ns1atordm@gmail.com"
+    pw= "dftcdzlecclqtyyt"
     connection = smtplib.SMTP("smtp.gmail.com",587)
     connection.starttls()
-    connection.login(user=my_email , password=password)
-
-    connection.sendmail(from_addr=my_email , to_addrs=email , msg = ("Здраствуйте вот мой перевод" ,message,"С уважением DMtranslator"))
+    connection.login(user=em , password = pw)
+    connection.sendmail(from_addr = em , to_addrs = email , msg=(message,"с уважением DMTransl") )
+    connection.close()
     
 
 
@@ -94,6 +99,10 @@ bca.place(height = 300 , width= 600 ,relx=0.8 , y = 230 , anchor= CENTER )
 button_tab2 = Button(tab2 , text = "Загрузить файл" , command = openfile)
 
 button_tab2.place(relx=0.1 , y= 40 , anchor = CENTER)
+
+button2_tab2 = Button(tab2 , text = "Перевести" , command = translate)
+
+button2_tab2.place(relx=0.3 , y= 40 , anchor = CENTER)
 
 cda = scrolledtext.ScrolledText(tab2)
 cda.place( height = 300 , width=600, relx=0.7 , y=230 , anchor= CENTER  )  
